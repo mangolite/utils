@@ -1,12 +1,10 @@
 package com.utils;
 
-import org.apache.log4j.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class Log {
-	// Register the beans when the class loads
-	static {
-		LogUtil.initialize();
-	}
 
 	private Logger logger;
 
@@ -16,62 +14,62 @@ public class Log {
 	}
 
 	public void trace(Object msg) {
-		this.logger.trace(msg);
+		this.logger.log(Level.FINEST, ArgUtil.parseAsString(msg));
 	}
 
 	public void debug(Object msg) {
-		this.logger.debug(msg);
+		this.logger.log(Level.FINER,ArgUtil.parseAsString(msg));
 	}
 
 	public void info(Object msg) {
-		this.logger.info(msg);
+		this.logger.log(Level.INFO,ArgUtil.parseAsString(msg));
 	}
 
 	public void warn(Object msg) {
-		this.logger.warn(msg);
+		this.logger.log(Level.WARNING,ArgUtil.parseAsString(msg));
 	}
 
 	public void error(Object msg) {
-		this.logger.error(msg);
+		this.logger.log(Level.FINE,ArgUtil.parseAsString(msg));
 	}
 
 	public void severe(Object msg) {
-		this.logger.error(msg);
+		this.logger.log(Level.SEVERE,ArgUtil.parseAsString(msg));
 	}
 
 	public void fatal(Object msg) {
-		this.logger.fatal(msg);
+		this.logger.log(Level.SEVERE,ArgUtil.parseAsString(msg));
 	}
 
 	public void trace(Object msg, Throwable thrown) {
-		this.logger.trace(msg, thrown);
+		this.logger.log(Level.FINEST, ArgUtil.parseAsString(msg),thrown);
 	}
 
 	public void debug(Object msg, Throwable thrown) {
-		this.logger.debug(msg, thrown);
+		this.logger.log(Level.FINER, ArgUtil.parseAsString(msg),thrown);
 	}
 
 	public void info(Object msg, Throwable thrown) {
-		this.logger.info(msg, thrown);
+		this.logger.log(Level.INFO,ArgUtil.parseAsString(msg));
 	}
 
 	public void warn(Object msg, Throwable thrown) {
-		this.logger.warn(msg, thrown);
+		this.logger.log(Level.WARNING,ArgUtil.parseAsString(msg));
 	}
 
 	public void error(Object msg, Throwable thrown) {
-		this.logger.error(msg, thrown);
+		this.logger.log(Level.FINE,ArgUtil.parseAsString(msg));
 	}
 
 	public void severe(Object msg, Throwable thrown) {
-		this.logger.error(msg, thrown);
+		this.logger.log(Level.SEVERE,ArgUtil.parseAsString(msg));
 	}
 
 	public void fatal(Object msg, Throwable thrown) {
-		this.logger.fatal(msg, thrown);
+		this.logger.log(Level.SEVERE,ArgUtil.parseAsString(msg));
 	}
 
 	public boolean isTraceEnabled() {
-		return this.logger.isTraceEnabled();
+		return this.logger.isLoggable(Level.FINEST);
 	}
 }
