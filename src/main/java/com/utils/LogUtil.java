@@ -11,7 +11,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 public class LogUtil implements LogUtilMBean {
-	private static final String LOGUTIL_HIERARCHY_LOG = "com.utils:type=LogUtil";
+	private static final String LOGUTIL_HIERARCHY_LOG = "com.dfferentia.util:type=LogUtil";
 	private static final Logger LOG = Logger.getLogger(LogUtil.class);
 
 	public static void initialize() {

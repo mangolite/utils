@@ -9,12 +9,21 @@ public final class DebugUtil {
 	private static final String DEBUG_BUILD_PASSWORD = "password";
 	private static String userName;
 	private static String passWord;
+	private static Properties debugProperties;
+	public static Properties getDebugProperties() {
+		return debugProperties;
+	}
+
+	public static void setDebugProperties(Properties debugProperties) {
+		DebugUtil.debugProperties = debugProperties;
+	}
+
 	static {
 		boolean temporaryDebugBuild = false;
 		String tempUserName = "";
 		String tempPassWord = "";
 		try {
-			Properties debugProperties = new Properties();
+			debugProperties = new Properties();
 			debugProperties.load(DebugUtil.class
 					.getResourceAsStream("/debug.properties"));
 			temporaryDebugBuild = "true".equals(debugProperties
