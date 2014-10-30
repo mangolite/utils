@@ -1,6 +1,3 @@
-/**
- * Copyright (c) - 2012, Dion Global Solutions. Company confidential.
- */
 package com.utils;
 
 import javax.management.MXBean;
