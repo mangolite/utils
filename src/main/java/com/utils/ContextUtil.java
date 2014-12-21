@@ -11,7 +11,6 @@ public final class ContextUtil {
 	}
 
 	public static final String TRACE_ID = "trace_id";
-	public static final String TOKEN_ID = "token_id";
 	public static final String USER_ID = "user_id";
 
 	private static final ThreadLocal<Map<String, Object>> context = new ThreadLocal<Map<String, Object>>() {
