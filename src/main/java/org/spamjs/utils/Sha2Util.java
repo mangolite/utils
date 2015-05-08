@@ -1,4 +1,4 @@
-package com.utils;
+package org.spamjs.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

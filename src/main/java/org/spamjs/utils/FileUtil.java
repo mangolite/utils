@@ -1,4 +1,4 @@
-package com.utils;
+package org.spamjs.utils;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;

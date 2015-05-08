@@ -1,5 +1,8 @@
 // @author - javageeks
 version="1.1-SNAPSHOT"
+
+apply plugin: 'maven'
+
 eclipse {
   jdt {
     sourceCompatibility = 1.8
@@ -11,28 +14,18 @@ repositories {
 	mavenCentral()
 }
 dependencies {
-   //testCompile group: 'junit', name: 'junit', version: '4.11'
 
   def guavaVer = "11.0.2";
   def jacksonVer = "1.9.5";
-  def slf4jVersion = "1.7.7"
   
   compile "org.codehaus.jackson:jackson-mapper-asl:$jacksonVer"
   compile "org.codehaus.jackson:jackson-core-asl:$jacksonVer"
   compile "com.fasterxml:jackson-xml-databind:0.6.2"
   compile "com.google.guava:guava:$guavaVer"
   
-  // logging
- // compile 'log4j:log4j:1.2.15'
   dependencies {
 	  compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.0.2'
 	  compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.0.2'
   }
   
-  //compile "org.slf4j:slf4j-log4j12:$slf4jVersion"
-  //compile "org.slf4j:slf4j-api:$slf4jVersion"
-
-  // following dependencies are required for RabbitMQ integration
- // compile "org.springframework.amqp:spring-rabbit:1.2.0.RELEASE"
-
 }

@@ -1,4 +1,4 @@
-package com.utils;
+package org.spamjs.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;

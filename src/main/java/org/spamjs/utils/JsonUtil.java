@@ -1,4 +1,4 @@
-package com.utils;
+package org.spamjs.utils;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -13,10 +13,10 @@ import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializerProvider;
 import org.codehaus.jackson.map.module.SimpleModule;
+import org.spamjs.utils.ArgUtil.EnumById;
 
 import com.google.common.collect.MapDifference;
 import com.google.common.collect.Maps;
-import com.utils.ArgUtil.EnumById;
 
 public final class JsonUtil {
 

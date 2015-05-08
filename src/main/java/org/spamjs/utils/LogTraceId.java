@@ -1,4 +1,4 @@
-package com.utils;
+package org.spamjs.utils;
 
 public class LogTraceId {
 	private long traceId;

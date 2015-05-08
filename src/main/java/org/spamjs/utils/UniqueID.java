@@ -1,4 +1,4 @@
-package com.utils;
+package org.spamjs.utils;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -7,8 +7,6 @@ public final class UniqueID {
 	private static AtomicInteger atom = new AtomicInteger();
 
 	private UniqueID() {
-		// Sonar code fix --> Utility classes should not have a public of
-		// default constructor
 		throw new IllegalStateException("This is a class with static methods and should not be instantiated");
 	}
 

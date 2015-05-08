@@ -1,4 +1,4 @@
-package com.utils;
+package org.spamjs.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

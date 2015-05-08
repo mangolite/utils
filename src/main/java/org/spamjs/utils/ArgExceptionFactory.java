@@ -1,8 +1,8 @@
-package com.utils;
+package org.spamjs.utils;
 
-import com.utils.ArgUtil.ArgException;
-import com.utils.ArgUtil.EnumParameterException;
-import com.utils.ArgUtil.ParameterException;
+import org.spamjs.utils.ArgUtil.ArgException;
+import org.spamjs.utils.ArgUtil.EnumParameterException;
+import org.spamjs.utils.ArgUtil.ParameterException;
 
 public final class ArgExceptionFactory {
 	// generic types
