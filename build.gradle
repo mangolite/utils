@@ -1,7 +1,14 @@
 // @author - javageeks
-version="1.1-SNAPSHOT"
 
+group = 'org.spamjs'
+version = '0.3.1'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'project-report'
+apply plugin: 'maven-publish'
 apply plugin: 'maven'
+apply plugin: 'signing'
 
 eclipse {
   jdt {
@@ -14,7 +21,6 @@ repositories {
 	mavenCentral()
 }
 dependencies {
-
   def guavaVer = "11.0.2";
   def jacksonVer = "1.9.5";
   
@@ -27,5 +33,65 @@ dependencies {
 	  compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.0.2'
 	  compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.0.2'
   }
-  
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+ 
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
+}
+
+signing {
+	sign configurations.archives
+}
+    
+    
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+ 
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+              authentication(userName: "lalit.tanwar07@gmail.com", password: "ripl@1234")
+            }
+ 
+            pom.project {
+               name 'utils'
+               packaging 'jar'
+               description 'Utils is basic java utility for project'
+               url 'https://gitlab.com/org.spamjs/utils.git'
+ 
+               scm {
+                   url 'scm:git@gitlab.com:org.spamjs/utils.git'
+                   connection 'scm:git@gitlab.com:org.spamjs/utils.git'
+                   developerConnection 'scm:git@gitlab.com:org.spamjs/utils.git'
+               }
+ 
+               licenses {
+                   license {
+                       name 'The Apache Software License, Version 2.0'
+                       url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                       distribution 'repo'
+                   }
+               }
+ 
+               developers {
+                   developer {
+                       id 'lalit.tanwar07'
+                       name 'Lalit Tanwar'
+                   }
+               }
+           }
+        }
+    }
 }
