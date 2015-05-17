@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+// TODO: Auto-generated Javadoc
 /**
  * JsonPath is to Json, what XPath is to XML. The main use of this class is
  * to navigate Json data structure to load/save/delete(map only) entries. Best
@@ -30,22 +31,55 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 @JsonSerialize(using = JsonPathSerializer.class)
 public class JsonPath {
 
+	/** The Constant VALID_TYPE. */
 	private static final String VALID_TYPE = "valid_type";
+	
+	/** The Constant KEY. */
 	private static final String KEY = "key";
 
+	/**
+	 * The Interface PathElement.
+	 */
 	interface PathElement {
+		
+		/**
+		 * Load.
+		 *
+		 * @param from the from
+		 * @return the object
+		 */
 		Object load(Object from);
 
+		/**
+		 * Save.
+		 *
+		 * @param from the from
+		 * @param value the value
+		 * @return the object
+		 */
 		Object save(Object from, Object value);
 	}
 
+	/**
+	 * The Class KeyAccess.
+	 */
 	private static class KeyAccess implements PathElement {
+		
+		/** The key. */
 		private final String key;
 
+		/**
+		 * Instantiates a new key access.
+		 *
+		 * @param key the key
+		 */
 		public KeyAccess(String key) {
 			this.key = key;
 		}
 
+		/* (non-Javadoc)
+		 * @see org.spamjs.utils.JsonPath.PathElement#load(java.lang.Object)
+		 */
 		@Override
 		public Object load(Object from) {
 			if (from instanceof Map) {
@@ -54,6 +88,9 @@ public class JsonPath {
 			return null;
 		}
 
+		/* (non-Javadoc)
+		 * @see org.spamjs.utils.JsonPath.PathElement#save(java.lang.Object, java.lang.Object)
+		 */
 		@Override
 		public Object save(Object from, Object value) {
 			if (from == null) {
@@ -66,6 +103,11 @@ public class JsonPath {
 			return null;
 		}
 
+		/**
+		 * Removes the.
+		 *
+		 * @param from the from
+		 */
 		public void remove(Object from) {
 			if (from instanceof Map) {
 				((Map) from).remove(this.key);
@@ -73,17 +115,36 @@ public class JsonPath {
 		}
 	}
 
+	/**
+	 * The Class ArrayAccess.
+	 */
 	private static class ArrayAccess implements PathElement {
+		
+		/** The index. */
 		private final int index;
 
+		/**
+		 * Instantiates a new array access.
+		 *
+		 * @param key the key
+		 */
 		public ArrayAccess(String key) {
 			this.index = Integer.parseInt(key.substring(1, key.length() - 1));
 		}
 
+		/**
+		 * Exists.
+		 *
+		 * @param key the key
+		 * @return true, if successful
+		 */
 		public static boolean exists(String key) {
 			return key.startsWith("[") && key.endsWith("]");
 		}
 
+		/* (non-Javadoc)
+		 * @see org.spamjs.utils.JsonPath.PathElement#load(java.lang.Object)
+		 */
 		@Override
 		public Object load(Object from) {
 			if (from instanceof Object[]) {
@@ -92,6 +153,9 @@ public class JsonPath {
 			return CollectionUtil.getArray(((List<Object>) from), this.index);
 		}
 
+		/* (non-Javadoc)
+		 * @see org.spamjs.utils.JsonPath.PathElement#save(java.lang.Object, java.lang.Object)
+		 */
 		@Override
 		public Object save(Object from, Object value) {
 			if (from == null) {
@@ -105,9 +169,17 @@ public class JsonPath {
 		}
 	}
 
+	/** The reference. */
 	private final String reference;
+	
+	/** The paths. */
 	private final ArrayList<PathElement> paths;
 
+	/**
+	 * Instantiates a new json path.
+	 *
+	 * @param reference the reference
+	 */
 	public JsonPath(String reference) {
 
 		this.reference = reference;
@@ -126,29 +198,55 @@ public class JsonPath {
 		}
 	}
 
+	/**
+	 * Exists.
+	 *
+	 * @param value the value
+	 * @return true, if successful
+	 */
 	public static boolean exists(String value) {
 		return value != null && value.startsWith("${") && value.endsWith("}");
 	}
 
+	/**
+	 * Creates the.
+	 *
+	 * @param reference the reference
+	 * @return the json path
+	 */
 	public static JsonPath create(String reference) {
 		return new JsonPath(reference.substring(2, reference.length() - 1));
 	}
 
+	/**
+	 * Gets the reference.
+	 *
+	 * @return the reference
+	 */
 	public String getReference() {
 		return this.reference;
 	}
 
 	// load and loadRequired method of T
+	/**
+	 * Load.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param defaultValue the default value
+	 * @return the t
+	 */
 	public <T> T load(Map<String, Object> properties, T defaultValue) {
 		return loadInternal(properties, null, defaultValue, false);
 	}
 
 	/**
-	 * Returns null if value is absent
-	 * 
-	 * @param properties
-	 * @param defaultValue
-	 * @return
+	 * Returns null if value is absent.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param defaultValue the default value
+	 * @return the t
 	 */
 	public <T> T loadNullable(Map<String, Object> properties, T defaultValue) {
 		// T value = loadInternal(properties, null, defaultValue, false);
@@ -165,15 +263,41 @@ public class JsonPath {
 
 	}
 
+	/**
+	 * Load required.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param defaultValue the default value
+	 * @return the t
+	 */
 	public <T> T loadRequired(Map<String, Object> properties, T defaultValue) {
 		return loadInternal(properties, null, defaultValue, true);
 	}
 
+	/**
+	 * Load.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @return the t
+	 */
 	public <T> T load(Map<String, Object> properties,
 			Map<String, Object> refProperties, T defaultValue) {
 		return loadInternal(properties, refProperties, defaultValue, false);
 	}
 
+	/**
+	 * Load nullable.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @return the t
+	 */
 	public <T> T loadNullable(Map<String, Object> properties,
 			Map<String, Object> refProperties, T defaultValue) {
 		// T value = loadInternal(properties, refProperties, defaultValue,
@@ -190,11 +314,30 @@ public class JsonPath {
 		return ArgUtil.parseAsT(value, defaultValue, false);
 	}
 
+	/**
+	 * Load required.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @return the t
+	 */
 	public <T> T loadRequired(Map<String, Object> properties,
 			Map<String, Object> refProperties, T defaultValue) {
 		return loadInternal(properties, refProperties, defaultValue, true);
 	}
 
+	/**
+	 * Load internal.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @param required the required
+	 * @return the t
+	 */
 	public <T> T loadInternal(Map<String, Object> properties,
 			Map<String, Object> refProperties, T defaultValue, boolean required) {
 		try {
@@ -207,17 +350,42 @@ public class JsonPath {
 	}
 
 	// load and loadRequired method of List<T>
+	/**
+	 * Load list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param defaultValue the default value
+	 * @return the list
+	 */
 	public <T> List<T> loadList(Map<String, Object> properties, T defaultValue) {
 		return loadInternalList(properties, null, defaultValue,
 				((List<T>) Constants.emptyList), false);
 	}
 
+	/**
+	 * Load list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @return the list
+	 */
 	public <T> List<T> loadList(Map<String, Object> properties, T defaultValue,
 			List<T> defaultListValue) {
 		return loadInternalList(properties, null, defaultValue,
 				defaultListValue, false);
 	}
 
+	/**
+	 * Load list nullable.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param defaultValue the default value
+	 * @return the list
+	 */
 	public <T> List<T> loadListNullable(Map<String, Object> properties,
 			T defaultValue) {
 		List<T> value = loadInternalList(properties, null, defaultValue,
@@ -228,6 +396,15 @@ public class JsonPath {
 		return value;
 	}
 
+	/**
+	 * Load list nullable.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @return the list
+	 */
 	public <T> List<T> loadListNullable(Map<String, Object> properties,
 			T defaultValue, List<T> defaultListValue) {
 		List<T> value = loadInternalList(properties, null, defaultValue,
@@ -238,24 +415,60 @@ public class JsonPath {
 		return value;
 	}
 
+	/**
+	 * Load required list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param defaultValue the default value
+	 * @return the list
+	 */
 	public <T> List<T> loadRequiredList(Map<String, Object> properties,
 			T defaultValue) {
 		return loadInternalList(properties, null, defaultValue,
 				((List<T>) Constants.emptyList), true);
 	}
 
+	/**
+	 * Load required list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @return the list
+	 */
 	public <T> List<T> loadRequiredList(Map<String, Object> properties,
 			T defaultValue, List<T> defaultListValue) {
 		return loadInternalList(properties, null, defaultValue,
 				defaultListValue, true);
 	}
 
+	/**
+	 * Load list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @return the list
+	 */
 	public <T> List<T> loadList(Map<String, Object> properties,
 			Map<String, Object> refProperties, T defaultValue) {
 		return loadInternalList(properties, refProperties, defaultValue,
 				((List<T>) Constants.emptyList), false);
 	}
 
+	/**
+	 * Load list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @return the list
+	 */
 	public <T> List<T> loadList(Map<String, Object> properties,
 			Map<String, Object> refProperties, T defaultValue,
 			List<T> defaultListValue) {
@@ -263,6 +476,15 @@ public class JsonPath {
 				defaultListValue, false);
 	}
 
+	/**
+	 * Load list nullable.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @return the list
+	 */
 	public <T> List<T> loadListNullable(Map<String, Object> properties,
 			Map<String, Object> refProperties, T defaultValue) {
 		List<T> value = loadInternalList(properties, refProperties,
@@ -273,6 +495,16 @@ public class JsonPath {
 		return value;
 	}
 
+	/**
+	 * Load list nullable.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @return the list
+	 */
 	public <T> List<T> loadListNullable(Map<String, Object> properties,
 			Map<String, Object> refProperties, T defaultValue,
 			List<T> defaultListValue) {
@@ -284,12 +516,31 @@ public class JsonPath {
 		return value;
 	}
 
+	/**
+	 * Load required list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @return the list
+	 */
 	public <T> List<T> loadRequiredList(Map<String, Object> properties,
 			Map<String, Object> refProperties, T defaultValue) {
 		return loadInternalList(properties, refProperties, defaultValue,
 				((List<T>) Constants.emptyList), true);
 	}
 
+	/**
+	 * Load required list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @return the list
+	 */
 	public <T> List<T> loadRequiredList(Map<String, Object> properties,
 			Map<String, Object> refProperties, T defaultValue,
 			List<T> defaultListValue) {
@@ -297,6 +548,17 @@ public class JsonPath {
 				defaultListValue, true);
 	}
 
+	/**
+	 * Load internal list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @param required the required
+	 * @return the list
+	 */
 	public <T> List<T> loadInternalList(Map<String, Object> properties,
 			Map<String, Object> refProperties, T defaultValue,
 			List<T> defaultListValue, boolean required) {
@@ -313,6 +575,14 @@ public class JsonPath {
 	}
 
 	// load and loadRequired method of List<List<T>>
+	/**
+	 * Load list of list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param defaultValue the default value
+	 * @return the list
+	 */
 	public <T> List<List<T>> loadListOfList(Map<String, Object> properties,
 			T defaultValue) {
 		return loadInternalListOfList(properties, null, defaultValue,
@@ -320,6 +590,16 @@ public class JsonPath {
 				(List<List<T>>) ((Object) Constants.emptyListOfList), false);
 	}
 
+	/**
+	 * Load list of list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @param defaultListOfListValue the default list of list value
+	 * @return the list
+	 */
 	public <T> List<List<T>> loadListOfList(Map<String, Object> properties,
 			T defaultValue, List<T> defaultListValue,
 			List<List<T>> defaultListOfListValue) {
@@ -327,6 +607,14 @@ public class JsonPath {
 				defaultListValue, defaultListOfListValue, false);
 	}
 
+	/**
+	 * Load required list of list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param defaultValue the default value
+	 * @return the list
+	 */
 	public <T> List<List<T>> loadRequiredListOfList(
 			Map<String, Object> properties, T defaultValue) {
 		return loadInternalListOfList(properties, null, defaultValue,
@@ -334,6 +622,16 @@ public class JsonPath {
 				(List<List<T>>) ((Object) Constants.emptyListOfList), true);
 	}
 
+	/**
+	 * Load required list of list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @param defaultListOfListValue the default list of list value
+	 * @return the list
+	 */
 	public <T> List<List<T>> loadRequiredListOfList(
 			Map<String, Object> properties, T defaultValue,
 			List<T> defaultListValue, List<List<T>> defaultListOfListValue) {
@@ -341,6 +639,15 @@ public class JsonPath {
 				defaultListValue, defaultListOfListValue, true);
 	}
 
+	/**
+	 * Load list of list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @return the list
+	 */
 	public <T> List<List<T>> loadListOfList(Map<String, Object> properties,
 			Map<String, Object> refProperties, T defaultValue) {
 		return loadInternalListOfList(properties, refProperties, defaultValue,
@@ -348,6 +655,17 @@ public class JsonPath {
 				(List<List<T>>) ((Object) Constants.emptyListOfList), false);
 	}
 
+	/**
+	 * Load list of list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @param defaultListOfListValue the default list of list value
+	 * @return the list
+	 */
 	public <T> List<List<T>> loadListOfList(Map<String, Object> properties,
 			Map<String, Object> refProperties, T defaultValue,
 			List<T> defaultListValue, List<List<T>> defaultListOfListValue) {
@@ -355,6 +673,15 @@ public class JsonPath {
 				defaultListValue, defaultListOfListValue, false);
 	}
 
+	/**
+	 * Load required list of list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @return the list
+	 */
 	public <T> List<List<T>> loadRequiredListOfList(
 			Map<String, Object> properties, Map<String, Object> refProperties,
 			T defaultValue) {
@@ -363,6 +690,17 @@ public class JsonPath {
 				(List<List<T>>) ((Object) Constants.emptyListOfList), true);
 	}
 
+	/**
+	 * Load required list of list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @param defaultListOfListValue the default list of list value
+	 * @return the list
+	 */
 	public <T> List<List<T>> loadRequiredListOfList(
 			Map<String, Object> properties, Map<String, Object> refProperties,
 			T defaultValue, List<T> defaultListValue,
@@ -371,6 +709,18 @@ public class JsonPath {
 				defaultListValue, defaultListOfListValue, true);
 	}
 
+	/**
+	 * Load internal list of list.
+	 *
+	 * @param <T> the generic type
+	 * @param properties the properties
+	 * @param refProperties the ref properties
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @param defaultListOfListValue the default list of list value
+	 * @param required the required
+	 * @return the list
+	 */
 	public <T> List<List<T>> loadInternalListOfList(
 			Map<String, Object> properties, Map<String, Object> refProperties,
 			T defaultValue, List<T> defaultListValue,
@@ -388,10 +738,10 @@ public class JsonPath {
 	}
 
 	/**
-	 * actually follow the path in JsonPath and extract the value
-	 * 
-	 * @param properties
-	 * @param refProperties
+	 * actually follow the path in JsonPath and extract the value.
+	 *
+	 * @param properties the properties
+	 * @param refProperties the ref properties
 	 * @return Object
 	 */
 	private Object internalLoad(Map<String, Object> properties,
@@ -411,10 +761,10 @@ public class JsonPath {
 	}
 
 	/**
-	 * actually follow the path in JsonPath and save the value
-	 * 
-	 * @param properties
-	 * @param value
+	 * actually follow the path in JsonPath and save the value.
+	 *
+	 * @param properties the properties
+	 * @param value the value
 	 */
 	public void save(Map<String, Object> properties, Object value) {
 		Object current = properties;
@@ -437,9 +787,9 @@ public class JsonPath {
 	}
 
 	/**
-	 * actually follow the path in JsonPath and remove (map only) the value
-	 * 
-	 * @param properties
+	 * actually follow the path in JsonPath and remove (map only) the value.
+	 *
+	 * @param properties the properties
 	 */
 	public void remove(Map<String, Object> properties) {
 		Object current = properties;
@@ -456,6 +806,9 @@ public class JsonPath {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -465,6 +818,9 @@ public class JsonPath {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -487,6 +843,9 @@ public class JsonPath {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return new StringBuilder().append("${").append(this.reference)

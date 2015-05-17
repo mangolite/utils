@@ -1,7 +1,7 @@
 // @author - javageeks
 
 group = 'org.spamjs'
-version = '0.3.1'
+version = '0.0.0'
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -62,7 +62,7 @@ uploadArchives {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
  
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-              authentication(userName: "lalit.tanwar07@gmail.com", password: "ripl@1234")
+              authentication(userName: sonatypeUsername, password: sonatypePassword)
             }
  
             pom.project {

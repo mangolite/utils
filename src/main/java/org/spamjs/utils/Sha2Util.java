@@ -3,15 +3,29 @@ package org.spamjs.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Sha2Util.
+ */
 public final class Sha2Util {
 
+	/** The Constant LOG. */
 	private static final Log LOG = new Log();
 
+	/**
+	 * Instantiates a new sha2 util.
+	 */
 	private Sha2Util() {
 		throw new IllegalStateException(
 				"This is a utility class with static methods and should not be instantiated");
 	}
 
+	/**
+	 * Gets the sha2in hex.
+	 *
+	 * @param input the input
+	 * @return the sha2in hex
+	 */
 	public static String getSha2inHex(String input) {
 
 		// Return blank String if input String is null

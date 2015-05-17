@@ -8,13 +8,28 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CollectionUtil.
+ */
 public final class CollectionUtil {
 
+	/**
+	 * Instantiates a new collection util.
+	 */
 	private CollectionUtil() {
 		throw new IllegalStateException(
 				"Class for static methods. Can not be instantiated");
 	}
 
+	/**
+	 * Gets the array.
+	 *
+	 * @param <T> the generic type
+	 * @param list the list
+	 * @param index the index
+	 * @return the array
+	 */
 	public static <T> T getArray(List<T> list, int index) {
 		if (list != null && list.size() > index) {
 			return list.get(index);
@@ -22,6 +37,14 @@ public final class CollectionUtil {
 		return null;
 	}
 
+	/**
+	 * Gets the array.
+	 *
+	 * @param <T> the generic type
+	 * @param array the array
+	 * @param index the index
+	 * @return the array
+	 */
 	public static <T> T getArray(T[] array, int index) {
 		if (array != null && array.length > index) {
 			return array[index];
@@ -29,16 +52,43 @@ public final class CollectionUtil {
 		return null;
 	}
 
+	/**
+	 * Gets the array.
+	 *
+	 * @param <T> the generic type
+	 * @param list the list
+	 * @param index the index
+	 * @param defaultValue the default value
+	 * @return the array
+	 */
 	public static <T> T getArray(List<T> list, int index, T defaultValue) {
 		T value = getArray(list, index);
 		return value != null ? value : defaultValue;
 	}
 
+	/**
+	 * Gets the array.
+	 *
+	 * @param <T> the generic type
+	 * @param array the array
+	 * @param index the index
+	 * @param defaultValue the default value
+	 * @return the array
+	 */
 	public static <T> T getArray(T[] array, int index, T defaultValue) {
 		T value = getArray(array, index);
 		return value != null ? value : defaultValue;
 	}
 
+	/**
+	 * Gets the array.
+	 *
+	 * @param <T> the generic type
+	 * @param list the list
+	 * @param index1 the index1
+	 * @param index2 the index2
+	 * @return the array
+	 */
 	public static <T> T getArray(List<List<T>> list, int index1, int index2) {
 		if (list != null && list.size() > index1) {
 			List<T> list2 = list.get(index1);
@@ -49,6 +99,13 @@ public final class CollectionUtil {
 		return null;
 	}
 
+	/**
+	 * As sorted list.
+	 *
+	 * @param <T> the generic type
+	 * @param c the c
+	 * @return the list
+	 */
 	public static <T extends Comparable<? super T>> List<T> asSortedList(
 			Collection<T> c) {
 		List<T> list = new ArrayList<T>(c);
@@ -56,6 +113,13 @@ public final class CollectionUtil {
 		return list;
 	}
 
+	/**
+	 * As sorted set.
+	 *
+	 * @param <T> the generic type
+	 * @param c the c
+	 * @return the sets the
+	 */
 	public static <T extends Comparable<? super T>> Set<T> asSortedSet(
 			Collection<T> c) {
 		List<T> list = new ArrayList<T>(c);
@@ -65,6 +129,14 @@ public final class CollectionUtil {
 		return set;
 	}
 
+	/**
+	 * Put array.
+	 *
+	 * @param <E> the element type
+	 * @param list the list
+	 * @param index the index
+	 * @param value the value
+	 */
 	public static <E> void putArray(List<E> list, int index, E value) {
 		if (list.size() <= index) {
 			for (; list.size() <= index;) {
@@ -74,6 +146,13 @@ public final class CollectionUtil {
 		list.set(index, value);
 	}
 
+	/**
+	 * Exists.
+	 *
+	 * @param value the value
+	 * @param collection the collection
+	 * @return true, if successful
+	 */
 	public static boolean exists(String value, String[] collection) {
 		if (value == null || collection == null) {
 			return false;
@@ -86,6 +165,14 @@ public final class CollectionUtil {
 		return false;
 	}
 
+	/**
+	 * Exists.
+	 *
+	 * @param <T> the generic type
+	 * @param value the value
+	 * @param collection the collection
+	 * @return true, if successful
+	 */
 	public static <T> boolean exists(T value, Collection<T> collection) {
 		if (value == null || collection == null) {
 			return false;
@@ -98,6 +185,12 @@ public final class CollectionUtil {
 		return false;
 	}
 
+	/**
+	 * Adds the all.
+	 *
+	 * @param collection the collection
+	 * @param value the value
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void addAll(Collection collection, Object value) {
 		if (value instanceof Collection) {
@@ -109,6 +202,13 @@ public final class CollectionUtil {
 		}
 	}
 
+	/**
+	 * Gets the list.
+	 *
+	 * @param <T> the generic type
+	 * @param elements the elements
+	 * @return the list
+	 */
 	@SafeVarargs
 	public static <T> List<T> getList(T... elements) {
 		List<T> list = new ArrayList<T>();
@@ -118,6 +218,13 @@ public final class CollectionUtil {
 		return list;
 	}
 
+	/**
+	 * Gets the sets the.
+	 *
+	 * @param <T> the generic type
+	 * @param elements the elements
+	 * @return the sets the
+	 */
 	@SafeVarargs
 	public static <T> Set<T> getSet(T... elements) {
 		Set<T> set = new HashSet<T>();
@@ -127,6 +234,12 @@ public final class CollectionUtil {
 		return set;
 	}
 
+	/**
+	 * Gets the list.
+	 *
+	 * @param arrylist the arrylist
+	 * @return the list
+	 */
 	public static List<String> getList(String[] arrylist) {
 		return new ArrayList<String>(Arrays.asList(arrylist));
 	}

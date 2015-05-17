@@ -6,13 +6,27 @@ import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Iterator;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class StringUtil.
+ */
 public final class StringUtil {
 
+	/**
+	 * Instantiates a new string util.
+	 */
 	private StringUtil() {
 		throw new IllegalStateException("This is a class with static methods and should not be instantiated");
 	}
 
 	// return the longest common prefix of s and t
+	/**
+	 * Lcp.
+	 *
+	 * @param s the s
+	 * @param t the t
+	 * @return the string
+	 */
 	public static String lcp(String s, String t) {
 		int n = Math.min(s.length(), t.length());
 		for (int i = 0; i < n; i++) {
@@ -24,10 +38,23 @@ public final class StringUtil {
 	}
 
 	// return if s is null or empty
+	/**
+	 * Checks if is empty.
+	 *
+	 * @param s the s
+	 * @return true, if is empty
+	 */
 	public static boolean isEmpty(String s) {
 		return s == null || "".equals(s.trim());
 	}
 
+	/**
+	 * Join.
+	 *
+	 * @param array the array
+	 * @param sep the sep
+	 * @return the string
+	 */
 	public static String join(String[] array, String sep) {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
@@ -45,6 +72,13 @@ public final class StringUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * Join.
+	 *
+	 * @param col the col
+	 * @param sep the sep
+	 * @return the string
+	 */
 	public static String join(Collection<String> col, String sep) {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
@@ -66,9 +100,9 @@ public final class StringUtil {
 	/**
 	 * This method returns a string with comma separated objects' string value.
 	 * Note this returns an extra comma in the end
-	 * 
-	 * @param objects
-	 * @return
+	 *
+	 * @param objects the objects
+	 * @return the string
 	 */
 	public static String commaSeparated(Object... objects) {
 		// Fix for Sonar: Performance - Method concatenates strings using + in a
@@ -140,10 +174,10 @@ public final class StringUtil {
 	}
 
 	/**
-	 * Does not take into account spaces and special chars etc word separators
-	 * 
-	 * @param str
-	 * @return
+	 * Does not take into account spaces and special chars etc word separators.
+	 *
+	 * @param str the str
+	 * @return the string
 	 */
 	/*
 	 * public static String camelCaseWord(String str) { return str.substring(0,
@@ -156,19 +190,22 @@ public final class StringUtil {
 	}
 
 	/**
-	 * 
-	 * @param decoded
+	 * Encode.
+	 *
+	 * @param decoded the decoded
 	 * @return : UTF-8 url encoded string for sent arg
-	 * @throws UnsupportedEncodingException
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
 	 */
 	public static String encode(String decoded) throws UnsupportedEncodingException {
 		return URLEncoder.encode(decoded, "UTF-8");
 	}
 
 	/**
-	 * @param encoded
-	 * @return
-	 * @throws UnsupportedEncodingException
+	 * Decode.
+	 *
+	 * @param encoded the encoded
+	 * @return the string
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
 	 */
 	public static String decode(String encoded) throws UnsupportedEncodingException {
 		return URLDecoder.decode(encoded, "UTF-8");

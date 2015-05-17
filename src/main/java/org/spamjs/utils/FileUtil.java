@@ -12,20 +12,34 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Writer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FileUtil.
+ */
 public final class FileUtil {
 
+	/** The Constant RESOURCE. */
 	private static final String RESOURCE = "resource";
+	
+	/** The Constant LOG. */
 	private static final Log LOG = new Log();
+	
+	/** The Constant FILE_PREFIX. */
 	public static final String FILE_PREFIX = "file://";
 
+	/**
+	 * Instantiates a new file util.
+	 */
 	private FileUtil() {
 		throw new IllegalStateException(
 				"This is a class with static methods and should not be instantiated");
 	}
 
 	/**
-	 * @param filename
-	 * @return
+	 * Read file.
+	 *
+	 * @param filename the filename
+	 * @return the string
 	 */
 	@SuppressWarnings(RESOURCE)
 	public static String readFile(String filename) {
@@ -62,13 +76,11 @@ public final class FileUtil {
 	}
 
 	/**
-	 * Write the data into file
-	 * 
-	 * @param fileLocation
-	 *            Path of file
-	 * @param content
-	 *            Content
-	 * @throws IOException
+	 * Write the data into file.
+	 *
+	 * @param fileLocation            Path of file
+	 * @param content            Content
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void saveToFile(String fileLocation, String content)
 			throws IOException {
@@ -88,6 +100,13 @@ public final class FileUtil {
 		}
 	}
 
+	/**
+	 * Save to file.
+	 *
+	 * @param fileLocation the file location
+	 * @param content the content
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void saveToFile(String fileLocation, byte[] content)
 			throws IOException {
 		BufferedOutputStream bos = null;

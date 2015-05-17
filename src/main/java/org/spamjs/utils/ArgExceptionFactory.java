@@ -4,17 +4,35 @@ import org.spamjs.utils.ArgUtil.ArgException;
 import org.spamjs.utils.ArgUtil.EnumParameterException;
 import org.spamjs.utils.ArgUtil.ParameterException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * A factory for creating ArgException objects.
+ */
 public final class ArgExceptionFactory {
 	// generic types
+	/** The Constant PARAMETER_MISSING. */
 	public static final String PARAMETER_MISSING = "01.001";
+	
+	/** The Constant PARAMETER_INVALID. */
 	public static final String PARAMETER_INVALID = "01.002";
 
+	/**
+	 * Instantiates a new arg exception factory.
+	 */
 	private ArgExceptionFactory() {
 		throw new IllegalStateException(
 				"This is a utility class with static methods and should not be instantiated");
 	}
 
 	// return Exception for missing or invalid parameter
+	/**
+	 * Param missing or invalid.
+	 *
+	 * @param key the key
+	 * @param value the value
+	 * @param defaultValue the default value
+	 * @return the arg exception
+	 */
 	@SuppressWarnings("rawtypes")
 	public static ArgException paramMissingOrInvalid(Object key, Object value,
 			Object defaultValue) {

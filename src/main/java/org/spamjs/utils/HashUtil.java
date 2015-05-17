@@ -4,11 +4,22 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class HashUtil.
+ */
 public final class HashUtil {
 
+	/** The Constant PAD_ZERO. */
 	private static final String PAD_ZERO = "0";
+	
+	/** The Constant MD5. */
 	private static final String MD5 = "MD5";
+	
+	/** The Constant SHA1. */
 	private static final String SHA1 = "SHA1";
+	
+	/** The Constant SHA2. */
 	private static final String SHA2 = "SHA-256";
 
 	/**
@@ -21,64 +32,78 @@ public final class HashUtil {
 	// private static final Log LOG = new Log();
 
 	/**
-	 * @param str
+	 * Gets the m d5 hash.
+	 *
+	 * @param str the str
 	 * @return md5 hashed string
-	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchAlgorithmException the no such algorithm exception
 	 */
 	public static String getMD5Hash(String str) throws NoSuchAlgorithmException {
 		return getMD5Hash(str.getBytes());
 	}
 
 	/**
-	 * @param byteArray
+	 * Gets the m d5 hash.
+	 *
+	 * @param byteArray the byte array
 	 * @return md5 hashed string
-	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchAlgorithmException the no such algorithm exception
 	 */
 	public static String getMD5Hash(byte[] byteArray) throws NoSuchAlgorithmException {
 		return getHashedStrFor(byteArray, MD5);
 	}
 
 	/**
-	 * @param str
+	 * Gets the SH a1 hash.
+	 *
+	 * @param str the str
 	 * @return sha1 hashed string
-	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchAlgorithmException the no such algorithm exception
 	 */
 	public static String getSHA1Hash(String str) throws NoSuchAlgorithmException {
 		return getSHA1Hash(str.getBytes());
 	}
 
 	/**
-	 * @param byteArray
+	 * Gets the SH a1 hash.
+	 *
+	 * @param byteArray the byte array
 	 * @return sha1 hashed string
-	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchAlgorithmException the no such algorithm exception
 	 */
 	public static String getSHA1Hash(byte[] byteArray) throws NoSuchAlgorithmException {
 		return getHashedStrFor(byteArray, SHA1);
 	}
 
 	/**
-	 * @param str
+	 * Gets the SH a2 hash.
+	 *
+	 * @param str the str
 	 * @return sha2 hashed string
-	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchAlgorithmException the no such algorithm exception
 	 */
 	public static String getSHA2Hash(String str) throws NoSuchAlgorithmException {
 		return getSHA1Hash(str.getBytes());
 	}
 
 	/**
-	 * @param byteArray
+	 * Gets the SH a2 hash.
+	 *
+	 * @param byteArray the byte array
 	 * @return sha2 hashed string
-	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchAlgorithmException the no such algorithm exception
 	 */
 	public static String getSHA2Hash(byte[] byteArray) throws NoSuchAlgorithmException {
 		return getHashedStrFor(byteArray, SHA2);
 	}
 
 	/**
-	 * @param byteArray
-	 * @param algorithm
-	 * @return
-	 * @throws NoSuchAlgorithmException
+	 * Gets the hashed str for.
+	 *
+	 * @param byteArray the byte array
+	 * @param algorithm the algorithm
+	 * @return the hashed str for
+	 * @throws NoSuchAlgorithmException the no such algorithm exception
 	 */
 	private static String getHashedStrFor(byte[] byteArray, String algorithm) throws NoSuchAlgorithmException {
 

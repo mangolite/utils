@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ArgUtil.
+ */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 /**
  * Utility function for parsing the objects as Integer, Long, Double, String, Boolean, Date
@@ -15,6 +19,9 @@ import java.util.Set;
  */
 public final class ArgUtil {
 
+	/**
+	 * Instantiates a new arg util.
+	 */
 	private ArgUtil() {
 		// Sonar code fix --> Utility classes should not have a public of
 		// default constructor
@@ -22,16 +29,24 @@ public final class ArgUtil {
 				"This is a class with static methods and should not be instantiated");
 	}
 
+	/**
+	 * The Interface EnumById.
+	 */
 	public static interface EnumById {
 		/* must return uppercase letters */
+		/**
+		 * Gets the id.
+		 *
+		 * @return the id
+		 */
 		public String getId();
 	}
 
 	/**
 	 * This method is called for generating the error message in case of
-	 * Parameter missing or invalid exceptions
-	 * 
-	 * @param object
+	 * Parameter missing or invalid exceptions.
+	 *
+	 * @param object the object
 	 * @return : String indicating the type of the given object
 	 */
 	public static String getType(Object object) {
@@ -53,6 +68,12 @@ public final class ArgUtil {
 		return "unknown";
 	}
 
+	/**
+	 * Gets the type enum.
+	 *
+	 * @param enumValue the enum value
+	 * @return the type enum
+	 */
 	public static String[] getTypeEnum(Enum enumValue) {
 		ArrayList<String> list = new ArrayList<String>();
 		for (Object element : enumValue.getClass().getEnumConstants()) {
@@ -65,12 +86,19 @@ public final class ArgUtil {
 		return list.toArray(new String[list.size()]);
 	}
 
+	/**
+	 * The Class ArgException.
+	 */
 	@SuppressWarnings("serial")
 	public static class ArgException extends RuntimeException {
 
+		/** The Constant CODE. */
 		public static final String CODE = "code";
+		
+		/** The Constant DATA. */
 		public static final String DATA = "data";
 
+		/** The warn local. */
 		private static ThreadLocal<Set<String>> warnLocal = new ThreadLocal<Set<String>>() {
 			@Override
 			protected Set<String> initialValue() {
@@ -78,32 +106,68 @@ public final class ArgUtil {
 			}
 		};
 
+		/** The error code. */
 		private String errorCode;
+		
+		/** The data. */
 		private Map<String, Object> data = new LinkedHashMap<String, Object>();
 
+		/**
+		 * Instantiates a new arg exception.
+		 */
 		public ArgException() {
 		}
 
+		/**
+		 * Instantiates a new arg exception.
+		 *
+		 * @param message the message
+		 */
 		public ArgException(String message) {
 			super(message);
 		}
 
+		/**
+		 * Instantiates a new arg exception.
+		 *
+		 * @param exp the exp
+		 */
 		public ArgException(Throwable exp) {
 			super(exp);
 		}
 
+		/**
+		 * Gets the error code.
+		 *
+		 * @return the error code
+		 */
 		public String getErrorCode() {
 			return this.errorCode;
 		}
 
+		/**
+		 * Sets the error code.
+		 *
+		 * @param errorCode the new error code
+		 */
 		public void setErrorCode(String errorCode) {
 			this.errorCode = errorCode;
 		}
 
+		/**
+		 * Gets the data.
+		 *
+		 * @return the data
+		 */
 		public Map<String, Object> getData() {
 			return this.data;
 		}
 
+		/**
+		 * Errors.
+		 *
+		 * @return the map
+		 */
 		public Map<String, Object> errors() {
 			Map<String, Object> innerMap = new LinkedHashMap<String, Object>();
 			innerMap.put(CODE, this.errorCode);
@@ -111,30 +175,56 @@ public final class ArgUtil {
 			return innerMap;
 		}
 
+		/**
+		 * Warning.
+		 *
+		 * @param message the message
+		 */
 		public static void warning(String message) {
 			warnLocal.get().add(message);
 		}
 
+		/**
+		 * Warnings.
+		 *
+		 * @return the list
+		 */
 		public static List<String> warnings() {
 			List<String> app = new ArrayList<String>(warnLocal.get());
 			warnLocal.get().clear();
 			return app;
 		}
 
+		/* (non-Javadoc)
+		 * @see java.lang.Throwable#getMessage()
+		 */
 		@Override
 		public String getMessage() {
 			return JsonUtil.toJson(errors());
 		}
 	}
 
+	/**
+	 * The Class ParameterException.
+	 */
 	@SuppressWarnings("serial")
 	public static class ParameterException extends ArgException {
+		
+		/** The is missing. */
 		protected boolean isMissing;
 
+		/**
+		 * Instantiates a new parameter exception.
+		 *
+		 * @param isMissing the is missing
+		 */
 		public ParameterException(boolean isMissing) {
 			this.isMissing = isMissing;
 		}
 
+		/* (non-Javadoc)
+		 * @see org.spamjs.utils.ArgUtil.ArgException#getMessage()
+		 */
 		@Override
 		public String getMessage() {
 			StringBuilder sb = new StringBuilder();
@@ -145,6 +235,11 @@ public final class ArgUtil {
 			return sb.toString();
 		}
 
+		/**
+		 * Gets the message override.
+		 *
+		 * @return the message override
+		 */
 		public String getMessageOverride() {
 			return this.isMissing ? "parameter missing"
 					: "parameter invalid - requires type "
@@ -152,16 +247,32 @@ public final class ArgUtil {
 		}
 	}
 
+	/**
+	 * The Class EnumParameterException.
+	 */
 	@SuppressWarnings("serial")
 	public static class EnumParameterException extends ParameterException {
+		
+		/** The enum value. */
 		private Enum enumValue;
+		
+		/** The message override. */
 		private String messageOverride;
 
+		/**
+		 * Instantiates a new enum parameter exception.
+		 *
+		 * @param isMissing the is missing
+		 * @param enumValue the enum value
+		 */
 		public EnumParameterException(boolean isMissing, Enum enumValue) {
 			super(isMissing);
 			this.enumValue = enumValue;
 		}
 
+		/* (non-Javadoc)
+		 * @see org.spamjs.utils.ArgUtil.ParameterException#getMessageOverride()
+		 */
 		@Override
 		public String getMessageOverride() {
 			if (this.messageOverride == null) {
@@ -184,8 +295,13 @@ public final class ArgUtil {
 	}
 
 	/**
-	 * Parse as T
-	 * 
+	 * Parse as T.
+	 *
+	 * @param <T> the generic type
+	 * @param value the value
+	 * @param defaultValue the default value
+	 * @param required the required
+	 * @return the t
 	 */
 	public static <T> T parseAsT(Object value, T defaultValue, boolean required) {
 		if (value == null) {
@@ -220,8 +336,15 @@ public final class ArgUtil {
 	}
 
 	/**
-	 * Parse as List<T>
-	 * */
+	 * Parse as List &lt;T&gt;.
+	 *
+	 * @param <T>; the generic type
+	 * @param value the value
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @param required the required
+	 * @return the list
+	 */
 	public static <T> List<T> parseAsListOfT(Object value, T defaultValue,
 			List<T> defaultListValue, boolean required) {
 		if (value == null) {
@@ -249,8 +372,16 @@ public final class ArgUtil {
 	}
 
 	/**
-	 * Parse as List<List<T>>
-	 * */
+	 * Parse as List<List<T>>.
+	 *
+	 * @param <T> the generic type
+	 * @param value the value
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @param defaultListOfListValue the default list of list value
+	 * @param required the required
+	 * @return the list
+	 */
 	public static <T> List<List<T>> parseAsListListOfT(Object value,
 			T defaultValue, List<T> defaultListValue,
 			List<List<T>> defaultListOfListValue, boolean required) {
@@ -276,8 +407,17 @@ public final class ArgUtil {
 	}
 
 	/**
-	 * Parse as List<List<List<T>>>
-	 * */
+	 * Parse as List<List<List<T>>>.
+	 *
+	 * @param <T> the generic type
+	 * @param value the value
+	 * @param defaultValue the default value
+	 * @param defaultListValue the default list value
+	 * @param defaultListListValue the default list list value
+	 * @param defaultListListOfListValue the default list list of list value
+	 * @param required the required
+	 * @return the list
+	 */
 	public static <T> List<List<List<T>>> parseAsListListListOfT(Object value,
 			T defaultValue, List<T> defaultListValue,
 			List<List<T>> defaultListListValue,
@@ -313,8 +453,8 @@ public final class ArgUtil {
 	 * 2) java.lang.Number (0 == Boolean.FALSE, rest all Boolean.TRUE) 
 	 * 3) String ("true" / "false")
 	 * </pre>
-	 * 
-	 * @param value
+	 *
+	 * @param value the value
 	 * @return : Boolean object if valid else null
 	 */
 	public static Boolean parseAsBoolean(Object value) {
@@ -328,6 +468,13 @@ public final class ArgUtil {
 		return null;
 	}
 
+	/**
+	 * Parses the as boolean.
+	 *
+	 * @param value the value
+	 * @param nullValue the null value
+	 * @return the boolean
+	 */
 	public static Boolean parseAsBoolean(Object value, Boolean nullValue) {
 		if (value == null) {
 			return nullValue;
@@ -346,8 +493,8 @@ public final class ArgUtil {
 	 * 4) String ("0x1231" / "0x1a3e" etc.) - Hexadecimal or base 16 if starts with 0x
 	 * 5) String ("023567" / "011256" etc.) - Octal or base 8 if starts with 0
 	 * </pre>
-	 * 
-	 * @param value
+	 *
+	 * @param value the value
 	 * @return : Integer object if valid else null
 	 */
 	public static Integer parseAsInteger(Object value) {
@@ -385,8 +532,8 @@ public final class ArgUtil {
 	 * 4) String ("0x1231" / "0x1a3e" etc.) - Hexadecimal or base 16 if starts with 0x
 	 * 5) String ("023567" / "011256" etc.) - Octal or base 8 if starts with 0
 	 * </pre>
-	 * 
-	 * @param value
+	 *
+	 * @param value the value
 	 * @return : Long object if valid else null
 	 */
 	public static Long parseAsLong(Object value) {
@@ -422,8 +569,8 @@ public final class ArgUtil {
 	 * 2) java.lang.Number 
 	 * 3) String ("1" / "2" etc.)
 	 * </pre>
-	 * 
-	 * @param value
+	 *
+	 * @param value the value
 	 * @return : Double object if valid else null
 	 */
 
@@ -451,8 +598,8 @@ public final class ArgUtil {
 	 * 1) java.util.Date
 	 * 2) unix timestamp
 	 * </pre>
-	 * 
-	 * @param value
+	 *
+	 * @param value the value
 	 * @return : Date object if valid else null
 	 */
 	public static Date parseAsSimpleDate(Object value) {
@@ -466,8 +613,8 @@ public final class ArgUtil {
 
 	/**
 	 * Returns object.toString() if the object is not null else returns null
-	 * 
-	 * @param object
+	 *
+	 * @param object the object
 	 * @return : Returns object.toString() if the object is not null else
 	 *         returns null
 	 */
@@ -479,10 +626,11 @@ public final class ArgUtil {
 	}
 
 	/**
-	 * @param object
-	 * @param defaultValue
-	 *            - if passed value is null or empty then default is returned.
-	 * @return
+	 * Parses the as string.
+	 *
+	 * @param object the object
+	 * @param defaultValue            - if passed value is null or empty then default is returned.
+	 * @return the string
 	 */
 	public static String parseAsString(Object object, String defaultValue) {
 		if (object == null || Constants.defaultString.equals(object)) {
@@ -491,6 +639,13 @@ public final class ArgUtil {
 		return parseAsString(object);
 	}
 
+	/**
+	 * Parses the as enum.
+	 *
+	 * @param value the value
+	 * @param defaultValue the default value
+	 * @return the enum
+	 */
 	public static Enum parseAsEnum(Object value, Enum defaultValue) {
 		String enumString = parseAsString(value);
 		if (enumString == null) {
