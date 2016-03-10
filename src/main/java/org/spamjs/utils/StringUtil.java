@@ -123,12 +123,7 @@ public final class StringUtil {
 	 * 
 	 * <p>
 	 * The String is trimmed using {@link String#trim()}. Trim removes start and
-	 * end characters &lt;= 32. To strip whitespace use {@link #strip(String)}.
-	 * </p>
-	 * 
-	 * <p>
-	 * To trim your choice of characters, use the {@link #strip(String, String)}
-	 * methods.
+	 * end characters &lt;= 32. To strip whitespace use {@link String#trim()} (String)}.
 	 * </p>
 	 * 
 	 * <pre>

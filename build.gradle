@@ -1,34 +1,23 @@
 // @author - javageeks
 
 group = 'org.spamjs'
-version = '0.0.0'
+version = '0.1.0'
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'project-report'
 apply plugin: 'maven-publish'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-eclipse {
-  jdt {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-  }
-}
 repositories {
 	mavenLocal()
 	mavenCentral()
 }
 dependencies {
-  def guavaVer = "11.0.2";
-  def jacksonVer = "1.9.5";
-  
-  compile "org.codehaus.jackson:jackson-mapper-asl:$jacksonVer"
-  compile "org.codehaus.jackson:jackson-core-asl:$jacksonVer"
-  compile "com.fasterxml:jackson-xml-databind:0.6.2"
-  compile "com.google.guava:guava:$guavaVer"
-  
+  def jacksonVer = "2.7.2";
+
+    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVer"
+
   dependencies {
 	  compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.0.2'
 	  compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.0.2'
@@ -69,12 +58,12 @@ uploadArchives {
                name 'utils'
                packaging 'jar'
                description 'Utils is basic java utility for project'
-               url 'https://gitlab.com/org.spamjs/utils.git'
+               url 'https://github.com/mangolite/utils.git'
  
                scm {
-                   url 'scm:git@gitlab.com:org.spamjs/utils.git'
-                   connection 'scm:git@gitlab.com:org.spamjs/utils.git'
-                   developerConnection 'scm:git@gitlab.com:org.spamjs/utils.git'
+                   url 'scm:git@github.com:mangolite/utils.git'
+                   connection 'scm:git@github.com:mangolite/utils.git'
+                   developerConnection 'scm:git@github.com:mangolite/utils.git'
                }
  
                licenses {
@@ -89,6 +78,7 @@ uploadArchives {
                    developer {
                        id 'lalit.tanwar07'
                        name 'Lalit Tanwar'
+                       email 'lalit.tanwar07@gmail.com'
                    }
                }
            }

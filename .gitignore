@@ -22,6 +22,7 @@
 *.rar
 *.tar
 *.zip
+*.iml
 
 # Eclipse #
 ###########
@@ -34,6 +35,7 @@
 # Folders #
 ###########
 .gradle
+.idea
 bin
 build
 target

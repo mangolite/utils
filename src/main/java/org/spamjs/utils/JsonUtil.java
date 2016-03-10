@@ -6,17 +6,19 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.Version;
-import org.codehaus.jackson.map.JsonSerializer;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializerProvider;
-import org.codehaus.jackson.map.module.SimpleModule;
+//import org.codehaus.jackson.JsonGenerator;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.Version;
+//import org.codehaus.jackson.map.JsonSerializer;
+//import org.codehaus.jackson.map.ObjectMapper;
+//import org.codehaus.jackson.map.SerializerProvider;
+//import org.codehaus.jackson.map.module.SimpleModule;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.spamjs.utils.ArgUtil.EnumById;
-
-import com.google.common.collect.MapDifference;
-import com.google.common.collect.Maps;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -179,30 +181,6 @@ public final class JsonUtil {
 	}
 
 	/**
-	 * Gets the diff.
-	 *
-	 * @param left the left
-	 * @param right the right
-	 * @return the diff
-	 */
-	public static MapDifference<String, Object> getDiff(
-			Map<String, Object> left, Map<String, Object> right) {
-		return Maps.difference(left, right);
-	}
-
-	/**
-	 * Gets the diff.
-	 *
-	 * @param left the left
-	 * @param right the right
-	 * @return the diff
-	 */
-	public static MapDifference<String, Object> getDiff(Object left,
-			Object right) {
-		return getDiff(instance.toMap(left), instance.toMap(right));
-	}
-
-	/**
 	 * Gets the linked map from json string.
 	 *
 	 * @param jsonString
@@ -277,9 +255,9 @@ public final class JsonUtil {
 }
 
 class EnumByIdSerializer extends JsonSerializer<EnumById> {
-	@Override
-	public void serialize(EnumById value, JsonGenerator jgen,
-			SerializerProvider sp) throws IOException, JsonProcessingException {
-		jgen.writeString(value.getId());
-	}
+
+    @Override
+    public void serialize(EnumById value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+        gen.writeString(value.getId());
+    }
 }

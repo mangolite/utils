@@ -1,5 +1,10 @@
 package org.spamjs.utils;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -7,23 +12,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.map.JsonSerializer;
-import org.codehaus.jackson.map.SerializerProvider;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
+//import org.codehaus.jackson.JsonGenerator;
+//import org.codehaus.jackson.map.JsonSerializer;
+//import org.codehaus.jackson.map.SerializerProvider;
+//import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 // TODO: Auto-generated Javadoc
 /**
  * JsonPath is to Json, what XPath is to XML. The main use of this class is
  * to navigate Json data structure to load/save/delete(map only) entries. Best
- * explained by taking an example to illustrate. </br>
+ * explained by taking an example to illustrate. <br>;
  * 
  * <pre>
  * Consider the Json: {"key1":{"key2":["val1",{"key3":"val2"}]}}
  * 
- * JsonPath of "key1" => {"key2":["val1",{"key3":"val2"}]}
- * JsonPath of "key1/key2/[0]" => val1
- * JsonPath of "key1/key2/[1]/key3" => val2
+ * JsonPath of "key1" =&gt; {"key2":["val1",{"key3":"val2"}]}
+ * JsonPath of "key1/key2/[0]" =&gt; val1
+ * JsonPath of "key1/key2/[1]/key3" =&gt; val2
  * </pre>
  * 
  */

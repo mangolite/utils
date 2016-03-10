@@ -372,7 +372,7 @@ public final class ArgUtil {
 	}
 
 	/**
-	 * Parse as List<List<T>>.
+	 * Parse as List&lt;List&lt;T&gt;&gt;.
 	 *
 	 * @param <T> the generic type
 	 * @param value the value
@@ -407,7 +407,7 @@ public final class ArgUtil {
 	}
 
 	/**
-	 * Parse as List<List<List<T>>>.
+	 * Parse as List&lt;List&lt;List&lt;T&gt;&gt;&gt;.
 	 *
 	 * @param <T> the generic type
 	 * @param value the value
